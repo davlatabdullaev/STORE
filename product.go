@@ -2,6 +2,14 @@ package main
 
 import "fmt"
 
+var (
+	productList = ProductList{
+		{Name: "Non", Price: 4000, Quantity: 10},
+		{Name: "Cola", Price: 13000, Quantity: 15},
+		{Name: "Nestle",Price: 3000,Quantity:  20},
+	}
+)
+
 type Product struct {
 	Name     string
 	Price    uint

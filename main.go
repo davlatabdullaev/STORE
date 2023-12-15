@@ -1,13 +1,7 @@
 package main
 
 func main() {
-	var (
-		productList = ProductList{
-			{Name: "Non", Price: 4000, Quantity: 10},
-			{Name: "Cola", Price: 13000, Quantity: 15},
-			{"Nestle", 3000, 20},
-		}
-
+var (
 		repository = Repository{}
 		store      = Store{}
 	)
