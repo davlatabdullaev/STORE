@@ -22,7 +22,7 @@ type ProductSellRequest struct {
 
 type ProductList []Product
 
-func (p Product) NewProduct(name string, price, quantity uint) Product {
+func NewProduct(name string, price, quantity uint) Product {
 	return Product{
 		Name:     name,
 		Price:    price,

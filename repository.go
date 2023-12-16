@@ -4,7 +4,7 @@ type Repository struct {
 	Products ProductList
 }
 
-func (r Repository) NewRepository(products ProductList) Repository {
+func NewRepository(products ProductList) Repository {
 	return Repository{
 		Products: products,
 	}

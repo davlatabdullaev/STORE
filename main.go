@@ -1,14 +1,33 @@
 package main
 
+import "fmt"
+
 func main() {
-var (
-		repository = Repository{}
-		store      = Store{}
-	)
+const(
+	StartShopCmd = iota+1
+	FinishShopCmd
+)
 
-	newRepository := repository.NewRepository(productList)
+	repo := NewRepository(productList)
+	store := NewStore(repo)
+	
 
-	newStore := store.NewStore(newRepository)
+	for true{
+var cmd int 
+fmt.Print(`
+      Enter command:
+      1 -  Start Shopping
+      2 -  Stop Shopping
+`)
+fmt.Scan(&cmd)
 
-	newStore.Sell()
+switch cmd{
+case StartShopCmd :
+	store.printStats()
+	store.StartSell()
+	store.printStats()
+case FinishShopCmd:
+	return
+}
+}
 }
