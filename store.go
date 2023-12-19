@@ -7,18 +7,30 @@ import (
 )
 
 type Store struct {
+	Dealer     Dealer
 	Repository Repository
-	Cash       uint
+	Budget     uint
+	Profit     uint
 }
 
 func (s *Store) StartSell() {
-	
 
 	productSellRequest := getProductInfo()
 
 	product, exits := s.Repository.Search(productSellRequest.Name)
 	if !exits {
-		fmt.Printf("We do not have %s product\n", productSellRequest.Name)
+		fmt.Printf("We do not have %s product\n We will bring %s in the next time \n", productSellRequest.Name, productSellRequest.Name)
+		
+		product, succes := s.Dealer.ProvideProduct(s.Budget, productSellRequest.Name, (productSellRequest.Quantity))
+		if !succes{
+			fmt.Println("We will buy!!!")
+			return
+		}
+		
+		s.Repository.Products.AddProduct(product)
+	
+	    s.Budget -= product.OriginalPrice*product.Quantity
+	
 		return
 	}
 
@@ -27,23 +39,25 @@ func (s *Store) StartSell() {
 		return
 	}
 	s.Repository.TakeProduct(productSellRequest.Name, productSellRequest.Quantity)
-	s.Cash += productSellRequest.Quantity * product.Price
-
+	s.Profit += productSellRequest.Quantity * (product.Price-product.OriginalPrice)
+	
+	s.printStats()
 }
 
 func NewStore(repository Repository) Store {
 	return Store{
 		Repository: repository,
-		Cash:       0,
+		Budget:     10_000,
+		Profit:     0,
 	}
 }
 func (s *Store) printStats() {
-f:= tabwriter.NewWriter(os.Stdout, 2, 8, 1, '\t', 0)	
-fmt.Fprintln(f, "Name\tQuantity\tPrice\t")
-for _, product := range s.Repository.Products{
-	fmt.Fprintf(f, "%s\t%d\t%d\n", product.Name, product.Quantity, product.Price)
+	f := tabwriter.NewWriter(os.Stdout, 1, 8, 1, '\t', 0)
+	fmt.Fprintln(f, "Name\tQuantity\tPrice\tOriginal Price\t")
+	for _, product := range s.Repository.Products {
+		fmt.Fprintf(f, "%s\t%d\t%d\t%d\n", product.Name, product.Quantity, product.Price, product.OriginalPrice)
+	}
+	fmt.Fprintf(f, "\t\t\tBudget : %d\n", s.Budget)
+	fmt.Fprintf(f, "\t\t\tProfit : %d\n", s.Profit)
+	f.Flush()
 }
-fmt.Fprintf(f, "\t\t\tCash : %d\n", s.Cash)
-f.Flush()
-}
-

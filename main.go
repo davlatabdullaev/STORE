@@ -25,9 +25,10 @@ switch cmd{
 case StartShopCmd :
 	store.printStats()
 	store.StartSell()
-	store.printStats()
 case FinishShopCmd:
 	return
+default:
+	fmt.Println("There is not such kind of command!!!")
 }
 }
 }
