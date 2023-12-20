@@ -1,34 +1,40 @@
+
 package main
 
-import "fmt"
-
-func main() {
-const(
-	StartShopCmd = iota+1
-	FinishShopCmd
+import (
+	"fmt"
+	_"package_module/dealer"
+	"package_module/product"
+	"package_module/repository"
+	"package_module/store"
 )
 
-	repo := NewRepository(productList)
-	store := NewStore(repo)
-	
+func main() {
+	const (
+		StartShopCmd = iota + 1
+		FinishShopCmd
+	)
 
-	for true{
-var cmd int 
-fmt.Print(`
+	repo := repository.NewRepository(product.ProductList{})
+	store := store.NewStore(repo)
+
+	for {
+		var cmd int
+		fmt.Print(`
       Enter command:
-      1 -  Start Shopping
-      2 -  Stop Shopping
+      1 - Start Shopping
+      2 - Stop Shopping
 `)
-fmt.Scan(&cmd)
+		fmt.Scan(&cmd)
 
-switch cmd{
-case StartShopCmd :
-	store.printStats()
-	store.StartSell()
-case FinishShopCmd:
-	return
-default:
-	fmt.Println("There is not such kind of command!!!")
-}
-}
+		switch cmd {
+		case StartShopCmd:
+			store.PrintStats()
+			store.StartSell()
+		case FinishShopCmd:
+			return
+		default:
+			fmt.Println("There is not such kind of command!!!")
+		}
+	}
 }

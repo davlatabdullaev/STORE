@@ -1,4 +1,4 @@
-package main
+package product
 
 import (
 	"fmt"
@@ -19,6 +19,7 @@ type Product struct {
 	Price         uint
 	OriginalPrice uint
 }
+
 type ProductSellRequest struct {
 	Name     string
 	Quantity uint
@@ -30,7 +31,7 @@ func (p *ProductList) AddProduct(product Product) {
 	*p = append(*p, product)
 }
 
-func (p *ProductList) RemoveProduct(i int){
+func (p *ProductList) RemoveProduct(i int) {
 	*p = append((*p)[:i], (*p)[i+1:]...)
 }
 
@@ -41,6 +42,7 @@ func NewProduct(name string, price, quantity uint) Product {
 		Quantity: quantity,
 	}
 }
+
 func getProductInfo() ProductSellRequest {
 	var (
 		productName string
@@ -58,6 +60,7 @@ func getProductInfo() ProductSellRequest {
 		Quantity: quantity,
 	}
 }
-func generateProductPrice(min, max int) uint{
-return uint(rand.Intn(max-min)+min)
+
+func GenerateProductPrice(min, max int) uint {
+	return uint(rand.Intn(max-min) + min)
 }
