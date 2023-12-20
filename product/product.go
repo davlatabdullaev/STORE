@@ -5,14 +5,6 @@ import (
 	"math/rand"
 )
 
-var (
-	productList = ProductList{
-		{Name: "Non", Price: 4000, Quantity: 10, OriginalPrice: 3000},
-		{Name: "Cola", Price: 13000, Quantity: 15, OriginalPrice: 10_000},
-		{Name: "Nestle", Price: 3000, Quantity: 20, OriginalPrice: 2000},
-	}
-)
-
 type Product struct {
 	Name          string
 	Quantity      uint
